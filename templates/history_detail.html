@@ -1,0 +1,60 @@
+{% extends 'base.html' %}{% block title %}Saved Profile · DataLens{% endblock
+%}{% block content %}
+<div class="page-heading d-flex justify-content-between align-items-end">
+  <div>
+    <span class="eyebrow">SAVED ANALYSIS</span>
+    <h1>{{ item.file_name }}</h1>
+    <p>
+      Saved profile from {{ item.uploaded_at.strftime('%d %b %Y, %H:%M') }}.
+      Upload the source file again for live charts and cleaning.
+    </p>
+  </div>
+  <a class="btn btn-outline-primary" href="{{ url_for('history') }}"
+    >Back to history</a
+  >
+</div>
+<div class="row g-3 mb-4">
+  {% for label,value,icon in
+  [('Rows',item.profile.rows,'table'),('Columns',item.profile.columns,'columns-gap'),('Missing
+  values',item.profile.missing,'exclamation-circle'),('Duplicate
+  rows',item.profile.duplicates,'copy')] %}
+  <div class="col-6 col-lg-3">
+    <div class="metric-card">
+      <i class="bi bi-{{ icon }}"></i><span>{{ label }}</span
+      ><b>{{ '{:,}'.format(value) }}</b>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<div class="content-card">
+  <h3>Saved column profile</h3>
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead>
+        <tr>
+          <th>Column</th>
+          <th>Detected type</th>
+          <th>Data type</th>
+          <th>Missing</th>
+          <th>Unique</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for column in item.profile.column_profiles %}
+        <tr>
+          <td class="fw-semibold">{{ column.name }}</td>
+          <td>
+            <span class="type-badge {{ column.type|lower }}"
+              >{{ column.type }}</span
+            >
+          </td>
+          <td>{{ column.dtype }}</td>
+          <td>{{ column.missing }}</td>
+          <td>{{ column.unique }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+# Secrets and local configuration
+.env
+
+# Python environments and cache
+.venv/
+__pycache__/
+*.py[cod]
+
+# Runtime-generated uploads
+uploads/
+
+# Common local files
+.DS_Store
+Thumbs.db

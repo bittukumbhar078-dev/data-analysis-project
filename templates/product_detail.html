@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}{{ product.product_name }} · DataLens Beauty{% endblock %}
+{% block content %}
+<a class="back-link" href="{{ url_for('beauty_products') }}"><i class="bi bi-arrow-left"></i> Back to product explorer</a>
+<section class="product-detail-card mt-3">
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <div class="product-detail-image">
+                {% if product.image_url %}<img src="{{ product.image_url }}" alt="{{ product.product_name }}" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('d-none');">{% endif %}
+                <div class="product-placeholder {% if product.image_url %}d-none{% endif %}"><i class="bi bi-droplet"></i><span>Beauty product image unavailable</span></div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <span class="eyebrow">PRODUCT ANALYSIS</span>
+            <h1 class="product-title">{{ product.product_name }}</h1>
+            <p class="product-brand detail-brand">{{ product.brand or 'Brand not available' }}</p>
+            <div class="product-detail-grid">
+                <div><span>Category</span><b>{{ product.category or 'Not available' }}</b></div>
+                <div><span>Barcode</span><b>{{ product.barcode or 'Not available' }}</b></div>
+                <div><span>Quantity</span><b>{{ product.quantity or 'Not available' }}</b></div>
+                <div><span>Countries</span><b>{{ product.countries or 'Not available' }}</b></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row g-4 mt-1">
+    <div class="col-lg-7">
+        <section class="content-card beauty-content-card"><h2>Product Overview</h2><p>{{ product.description or 'Not available' }}</p></section>
+        <section class="content-card beauty-content-card mt-4"><h2>Ingredients</h2><p>{{ product.ingredients or 'Not available' }}</p></section>
+    </div>
+    <div class="col-lg-5">
+        <section class="content-card beauty-content-card">
+            <span class="eyebrow">PRODUCT PERFORMANCE INDICATORS</span>
+            <div class="indicator-list">
+                <div><span>Rating</span><b>{{ product.rating if product.rating is not none else 'Not available' }}</b></div>
+                <div><span>Review count</span><b>{{ product.review_count if product.review_count is not none else 'Not available' }}</b></div>
+                <div><span>Price</span><b>{% if product.price is not none %}₹{{ product.price }}{% else %}Not available{% endif %}</b></div>
+                <div><span>Product information completeness</span><b>{{ product.completeness }}%</b></div>
+            </div>
+        </section>
+        <section class="consumer-note mt-4"><i class="bi bi-info-circle"></i><div><h3>Consumer Preference Indicators</h3><p>These indicators are based on available product information and do not represent actual sales or purchase transactions.</p></div></section>
+        <p class="source-label mt-4"><b>Data Source:</b> {{ product.source }}</p>
+    </div>
+</div>
+{% endblock %}

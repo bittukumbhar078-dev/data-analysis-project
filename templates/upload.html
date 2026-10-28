@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Upload · DataLens{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <span class="eyebrow">NEW ANALYSIS</span>
+    <h1>Upload a dataset</h1>
+    <p>Use a structured CSV or Excel file with column names in the first row.</p>
+</div>
+<div class="upload-card">
+    <form method="post" enctype="multipart/form-data" id="uploadForm">
+        <label class="drop-zone" id="dropZone">
+            <input type="file" name="dataset" id="datasetFile" accept=".csv,.xlsx,.xls" required>
+            <i class="bi bi-cloud-arrow-up"></i>
+            <h3>Drag and drop your file here</h3>
+            <p>or <span>browse files</span></p>
+            <small>CSV, XLSX, XLS · Maximum 10 MB by default</small>
+        </label>
+        <div class="selected-file d-none" id="selectedFile"></div>
+        <button class="btn btn-primary mt-4" id="uploadButton">Upload and profile <i class="bi bi-arrow-right"></i></button>
+    </form>
+</div>
+<div class="row mt-4 g-3">
+    <div class="col-md-4"><div class="small-card"><b>Safe validation</b><span>File type, size and tabular structure are checked.</span></div></div>
+    <div class="col-md-4"><div class="small-card"><b>Flexible format</b><span>Works with any structured domain data.</span></div></div>
+    <div class="col-md-4"><div class="small-card"><b>Reasonable limits</b><span>Up to 50,000 rows and 100 columns by default.</span></div></div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/upload.js') }}"></script>{% endblock %}

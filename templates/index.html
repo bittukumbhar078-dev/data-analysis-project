@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}DataLens Beauty · Beauty Industry Analytics{% endblock %}
+{% block content %}
+<section class="beauty-hero">
+    <div class="container"><div class="row align-items-center g-5">
+        <div class="col-lg-7">
+            <span class="eyebrow">BEAUTY INDUSTRY ANALYTICS</span>
+            <h1>Consumer Buying Behavior &amp; <span>Product Performance Analysis</span></h1>
+            <p class="lead">Explore beauty products, analyze product performance, and understand consumer preference indicators through data.</p>
+            <div class="d-flex gap-3 flex-wrap mt-4">
+                <a class="btn btn-primary btn-lg" href="{{ url_for('beauty_products') }}">Explore Beauty Products <i class="bi bi-arrow-right"></i></a>
+                <a class="btn btn-outline-primary btn-lg" href="{{ url_for('upload') }}">Upload Your Dataset</a>
+            </div>
+            <p class="beauty-data-note mt-4"><i class="bi bi-database-check me-1"></i> Powered by beauty product data and data analytics.</p>
+        </div>
+        <div class="col-lg-5"><div class="beauty-hero-visual"><div class="beauty-orbit-card one"><strong>Beauty insights</strong>Products · brands · categories</div><div class="beauty-bottle"></div><div class="beauty-orbit-card two"><strong>Data-driven</strong>Clear, careful indicators</div></div></div>
+    </div></div>
+</section>
+
+<section class="beauty-section container">
+    <div class="text-center mb-5"><span class="eyebrow">TWO CONNECTED WORKFLOWS</span><h2>Explore products or analyze your own data</h2></div>
+    <div class="row g-4">
+        <div class="col-lg-6"><article class="workflow-card"><span class="workflow-icon"><i class="bi bi-cloud-arrow-up"></i></span><h3>Upload &amp; Analyze</h3><p>Upload CSV or Excel data to clean, analyze and visualize beauty-industry datasets with dynamic charts and insights.</p><a class="btn btn-outline-primary mt-2" href="{{ url_for('upload') }}">Upload Dataset</a></article></div>
+        <div class="col-lg-6"><article class="workflow-card"><span class="workflow-icon"><i class="bi bi-stars"></i></span><h3>Explore Beauty Products</h3><p>Search beauty products and explore available product information using Open Beauty Facts.</p><a class="btn btn-primary mt-2" href="{{ url_for('beauty_products') }}">Explore Products</a></article></div>
+    </div>
+</section>
+
+<section class="beauty-section beauty-section-soft"><div class="container"><div class="row g-4">
+    <div class="col-md-4"><div class="beauty-feature"><i class="bi bi-search-heart"></i><h3>Product information</h3><p>Inspect available product names, categories, ingredients, quantities, countries, and images from the source.</p></div></div>
+    <div class="col-md-4"><div class="beauty-feature"><i class="bi bi-bar-chart-line"></i><h3>Product performance</h3><p>Use real fields in uploaded datasets such as ratings, review volume, price, and category information.</p></div></div>
+    <div class="col-md-4"><div class="beauty-feature"><i class="bi bi-info-circle"></i><h3>Careful indicators</h3><p>Ratings and reviews are presented as preference indicators, never as actual sales without sales data.</p></div></div>
+</div></div></section>
+
+<section class="beauty-section container"><div class="text-center mb-5"><span class="eyebrow">HOW IT WORKS</span><h2>From beauty data to clear insights</h2></div><div class="flow-row">{% for step, icon in [('Explore','stars'),('Upload','cloud-arrow-up'),('Profile','clipboard-data'),('Clean','brush'),('Visualize','pie-chart'),('Understand','lightbulb')] %}<div class="flow-step"><i class="bi bi-{{ icon }}"></i><b>{{ step }}</b></div>{% endfor %}</div></section>
+
+<footer class="text-center py-5 text-muted">DataLens Beauty · Consumer Buying Behavior &amp; Product Performance Analysis<br><small>Flask · Python · MySQL · Pandas · Chart.js · Open Beauty Facts</small></footer>
+{% endblock %}

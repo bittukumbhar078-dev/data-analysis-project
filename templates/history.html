@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}History · DataLens{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <span class="eyebrow">ANALYSIS HISTORY</span>
+    <h1>Your datasets</h1>
+    <p>Only you can see the datasets associated with your account.</p>
+</div>
+
+<div class="content-card">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Previous uploads</h3>
+        <a href="{{ url_for('upload') }}" class="btn btn-primary btn-sm">Upload another</a>
+    </div>
+
+    {% if datasets %}
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Dataset</th><th>Type</th><th>Rows</th><th>Columns</th><th>Uploaded</th><th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dataset in datasets %}
+                <tr>
+                    <td class="fw-semibold"><i class="bi bi-file-earmark-spreadsheet text-primary me-2"></i>{{ dataset.file_name }}</td>
+                    <td>{{ dataset.file_type|upper }}</td>
+                    <td>{{ '{:,}'.format(dataset.row_count) }}</td>
+                    <td>{{ dataset.column_count }}</td>
+                    <td>{{ dataset.uploaded_at.strftime('%d %b %Y, %H:%M') }}</td>
+                    <td><a class="btn btn-sm btn-outline-primary" href="{{ url_for('history_detail', dataset_id=dataset.id) }}">View profile</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <div class="empty-inline">No uploaded datasets yet. Your new analyses will appear here.</div>
+    {% endif %}
+</div>
+{% endblock %}

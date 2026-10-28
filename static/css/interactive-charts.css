@@ -1,0 +1,12 @@
+.chart-card { height: 385px; }
+.chart-card canvas { max-height: 250px; }
+.chart-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.chart-heading h3 { margin: 0; }
+.chart-actions { display: flex; flex-wrap: wrap; gap: 5px; }
+.chart-actions .btn { font-size: .7rem; padding: 4px 7px; }
+.chart-actions .active { background: #3b63f3; border-color: #3b63f3; color: #fff; }
+.chart-help { color: #687386; font-size: .75rem; margin: 7px 0; }
+.chart-selection { min-height: 28px; padding: 6px 9px; margin-top: 8px; border-radius: 7px; background: #f4f7fc; color: #536176; font-size: .76rem; }
+.chart-card.expanded { position: fixed; inset: 4vh 4vw; z-index: 1055; height: 92vh; box-shadow: 0 20px 55px rgba(23, 32, 51, .26); }
+.chart-card.expanded canvas { max-height: calc(92vh - 150px); }
+@media (max-width: 575px) { .chart-card { height: 420px; } .chart-heading { align-items: flex-start; flex-direction: column; } .chart-card.expanded { inset: 2vh 2vw; height: 96vh; } }

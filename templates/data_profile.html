@@ -1,0 +1,60 @@
+{% extends 'base.html' %} {% block title %}Data Profile · DataLens{% endblock %}
+{% block content %}
+<div class="page-heading d-flex justify-content-between align-items-end">
+  <div>
+    <span class="eyebrow">DATA PROFILE</span>
+    <h1>Know your dataset</h1>
+    <p>Automatic field detection based on values and structure.</p>
+  </div>
+  <a href="{{ url_for('cleaning') }}" class="btn btn-primary"
+    >Review cleaning <i class="bi bi-arrow-right"></i
+  ></a>
+</div>
+<div class="row g-3 mb-4">
+  {% for label,value,icon in
+  [('Rows',profile.rows,'table'),('Columns',profile.columns,'columns-gap'),('Missing
+  values',profile.missing,'exclamation-circle'),('Duplicate
+  rows',profile.duplicates,'copy')] %}
+  <div class="col-6 col-lg-3">
+    <div class="metric-card">
+      <i class="bi bi-{{ icon }}"></i><span>{{ label }}</span
+      ><b>{{ '{:,}'.format(value) }}</b>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<div class="content-card">
+  <div class="card-title">
+    <h3>Column profile</h3>
+    <p>Detected type is based on data, not a fixed domain.</p>
+  </div>
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead>
+        <tr>
+          <th>Column name</th>
+          <th>Detected type</th>
+          <th>Data type</th>
+          <th>Missing</th>
+          <th>Unique</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for column in profile.column_profiles %}
+        <tr>
+          <td class="fw-semibold">{{ column.name }}</td>
+          <td>
+            <span class="type-badge {{ column.type|lower }}"
+              >{{ column.type }}</span
+            >
+          </td>
+          <td>{{ column.dtype }}</td>
+          <td>{{ '{:,}'.format(column.missing) }}</td>
+          <td>{{ '{:,}'.format(column.unique) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

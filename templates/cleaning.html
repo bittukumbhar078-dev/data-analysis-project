@@ -1,0 +1,45 @@
+{% extends 'base.html' %} {% block title %}Cleaning · DataLens{% endblock %} {%
+block content %}
+<div class="page-heading">
+  <span class="eyebrow">DATA CLEANING</span>
+  <h1>Review cleaning changes</h1>
+  <p>DataLens makes safe, explainable improvements before analysis.</p>
+</div>
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="content-card compare-card">
+      <span>BEFORE CLEANING</span>
+      <h2>{{ '{:,}'.format(summary.before.rows) }} rows</h2>
+      <div>
+        <b>{{ summary.before.columns }}</b> columns ·
+        <b>{{ summary.before.missing }}</b> missing values ·
+        <b>{{ summary.before.duplicates }}</b> duplicates
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="content-card compare-card after">
+      <span>AFTER CLEANING</span>
+      <h2>{{ '{:,}'.format(summary.after.rows) }} rows</h2>
+      <div>
+        <b>{{ summary.after.columns }}</b> columns ·
+        <b>{{ summary.after.missing }}</b> missing values ·
+        <b>{{ summary.after.duplicates }}</b> duplicates
+      </div>
+    </div>
+  </div>
+</div>
+<div class="content-card mt-4">
+  <h3>Cleaning actions performed</h3>
+  <ul class="clean-list">
+    {% for action in summary.actions %}
+    <li><i class="bi bi-check-circle-fill"></i>{{ action }}</li>
+    {% endfor %}
+  </ul>
+  <form method="post">
+    <button class="btn btn-primary">
+      Apply cleaning and open dashboard <i class="bi bi-arrow-right"></i>
+    </button>
+  </form>
+</div>
+{% endblock %}

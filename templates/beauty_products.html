@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}Explore Beauty Products · DataLens Beauty{% endblock %}
+{% block content %}
+<div class="page-heading beauty-heading">
+    <span class="eyebrow">OPEN BEAUTY FACTS EXPLORER</span>
+    <h1>Explore Beauty Products</h1>
+    <p>Discover beauty products and explore available product information from Open Beauty Facts.</p>
+</div>
+
+<section class="beauty-search-card">
+    <form method="get" class="row g-3 align-items-end">
+        <div class="col-lg-5">
+            <label class="form-label" for="keyword">Search beauty products</label>
+            <input class="form-control" id="keyword" name="keyword" value="{{ filters.keyword }}" placeholder="Product name or keyword">
+        </div>
+        <div class="col-md-4 col-lg-2">
+            <label class="form-label" for="brand">Brand</label>
+            <input class="form-control" id="brand" name="brand" value="{{ filters.brand }}" placeholder="Optional">
+        </div>
+        <div class="col-md-4 col-lg-2">
+            <label class="form-label" for="category">Category</label>
+            <input class="form-control" id="category" name="category" value="{{ filters.category }}" placeholder="Optional">
+        </div>
+        <div class="col-md-4 col-lg-2">
+            <label class="form-label" for="barcode">Barcode</label>
+            <input class="form-control" id="barcode" name="barcode" value="{{ filters.barcode }}" placeholder="Exact lookup">
+        </div>
+        <div class="col-lg-1 d-grid"><button class="btn btn-primary" type="submit">Search</button></div>
+    </form>
+    <div class="search-note"><i class="bi bi-info-circle"></i> Product images and information are supplied by Open Beauty Facts. Missing information remains unavailable.</div>
+</section>
+
+{% if error %}
+<div class="alert alert-warning mt-4"><i class="bi bi-exclamation-circle me-2"></i>{{ error }}</div>
+{% endif %}
+
+{% if products %}
+<div class="d-flex justify-content-between align-items-center mt-5 mb-3"><h2 class="section-title">Available product information</h2><span class="result-count">{{ products|length }} result(s)</span></div>
+<div class="row g-4">
+    {% for product in products %}
+    <div class="col-sm-6 col-lg-4 col-xl-3">
+        <article class="beauty-product-card h-100">
+            <div class="product-image-wrap">
+                {% if product.image_url %}
+                <img src="{{ product.image_url }}" alt="{{ product.product_name }}" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('d-none');">
+                {% endif %}
+                <div class="product-placeholder {% if product.image_url %}d-none{% endif %}"><i class="bi bi-droplet"></i><span>Beauty product</span></div>
+            </div>
+            <div class="product-card-body">
+                <span class="product-category">{{ product.category or 'Category not available' }}</span>
+                <p class="product-brand">{{ product.brand or 'Brand not available' }}</p>
+                <h3>{{ product.product_name }}</h3>
+                <div class="product-metrics">
+                    <span><i class="bi bi-star"></i> {{ product.rating if product.rating is not none else 'Rating unavailable' }}</span>
+                    <span><i class="bi bi-chat-square-text"></i> {{ product.review_count if product.review_count is not none else 'Reviews unavailable' }}</span>
+                </div>
+                <p class="source-label mb-0 mt-2"><b>Source:</b> {{ product.source }}</p>
+                {% if product.id %}
+                <a class="btn btn-primary w-100 mt-3" href="{{ url_for('product_detail', product_id=product.id) }}">View Analysis <i class="bi bi-arrow-right"></i></a>
+                {% else %}
+                <span class="btn btn-outline-secondary disabled w-100 mt-3">Local cache unavailable</span>
+                {% endif %}
+            </div>
+        </article>
+    </div>
+    {% endfor %}
+</div>
+{% elif searched and not error %}
+<div class="beauty-empty-state mt-4"><i class="bi bi-search"></i><h2>No matching products found</h2><p>Try a barcode, a more specific brand, or a different beauty category.</p></div>
+{% else %}
+<div class="beauty-empty-state mt-4"><i class="bi bi-stars"></i><h2>Search a beauty product</h2><p>Use a product name, brand, category, or barcode to fetch currently available product information.</p></div>
+{% endif %}
+{% endblock %}
